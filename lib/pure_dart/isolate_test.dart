@@ -3,7 +3,7 @@
 import 'dart:isolate';
 
 /// Imitation of hard operation
-void _hardMethod(_) {
+String _hardMethod(_) {
   final stopwatch = Stopwatch()..start();
   print('!!! Worker_isolate is starting');
   List<int> list = [];
@@ -18,13 +18,13 @@ void _hardMethod(_) {
   print('!!! Worker_isolate is finished');
   print('Total time on worker_isolate = ${stopwatch.elapsedMilliseconds}');
   stopwatch.stop();
+  return 'done';
 }
 
 void main() async {
   final stopwatch = Stopwatch()..start();
   print('Before Hard operation');
-  Isolate.spawn(_hardMethod, '');
-
+  await Isolate.spawn(_hardMethod, '');
   print('After launch worker_isolate');
   print('Total time in main_isolate = ${stopwatch.elapsedMilliseconds}');
 
